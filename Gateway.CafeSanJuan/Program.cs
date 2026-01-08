@@ -1,11 +1,15 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ? Configurar puerto dinámico para Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+// ? Agregar Controllers
+builder.Services.AddControllers();
 
 // ? Configurar HttpClient para aceptar certificados SSL
 builder.Services.AddHttpClient();
@@ -14,15 +18,27 @@ builder.Services.AddHttpClient();
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services.AddOcelot(builder.Configuration);
 
+// ? Agregar Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API Gateway - Café San Juan",
+        Version = "v1",
+        Description = "Gateway que centraliza todos los microservicios del sistema de reservas"
+    });
+});
+
 // ? Configurar CORS para permitir cualquier origen
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
-  {
+    {
         policy.AllowAnyOrigin()
-        .AllowAnyMethod()
+              .AllowAnyMethod()
               .AllowAnyHeader()
-              .WithExposedHeaders("*"); // Exponer todos los headers en las respuestas
+              .WithExposedHeaders("*");
     });
 });
 
@@ -30,6 +46,17 @@ var app = builder.Build();
 
 // ? Habilitar CORS ANTES de Ocelot
 app.UseCors("AllowAll");
+
+// ? Configurar Swagger
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway API v1");
+    c.RoutePrefix = string.Empty; // Swagger en la raíz
+});
+
+// ? Mapear Controllers
+app.MapControllers();
 
 // ? Usar Ocelot como API Gateway
 await app.UseOcelot();
