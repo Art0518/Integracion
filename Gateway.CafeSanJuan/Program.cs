@@ -47,12 +47,12 @@ var app = builder.Build();
 // ? Habilitar CORS ANTES de Ocelot
 app.UseCors("AllowAll");
 
-// ? Configurar Swagger
+// ? Configurar Swagger (en la raíz)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway API v1");
-    c.RoutePrefix = string.Empty; // Swagger en la raíz
+    c.RoutePrefix = string.Empty; // ? Swagger en la raíz (/)
 });
 
 // ? Mapear Controllers
