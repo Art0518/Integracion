@@ -47,18 +47,36 @@ var app = builder.Build();
 // ? Habilitar CORS ANTES de Ocelot
 app.UseCors("AllowAll");
 
-// ? Configurar Swagger (en la raíz)
+// ? Configurar Swagger (ANTES de Ocelot)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway API v1");
-    c.RoutePrefix = string.Empty; // ? Swagger en la raíz (/)
+    c.RoutePrefix = string.Empty; // Swagger en la raíz
 });
 
-// ? Mapear Controllers
+// ? Mapear Controllers (ANTES de Ocelot)
 app.MapControllers();
 
-// ? Usar Ocelot como API Gateway
-await app.UseOcelot();
+// ? Usar Ocelot SOLO para rutas no manejadas por Controllers/Swagger
+app.UseOcelot((ocelotBuilder, pipelineConfig) =>
+{
+    // Configurar para que Ocelot NO intercepte rutas de Swagger ni API Gateway
+    pipelineConfig.PreErrorResponderMiddleware = async (ctx, next) =>
+    {
+        var path = ctx.Request.Path.Value;
+
+        // Si la ruta es de Swagger o del Gateway, NO usar Ocelot
+        if (path.StartsWith("/swagger") || 
+            path.StartsWith("/api/gateway") ||
+            path == "/")
+        {
+            await next();
+            return;
+        }
+        
+        await next();
+    };
+}).Wait();
 
 app.Run();
