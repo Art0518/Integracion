@@ -2,12 +2,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy everything and restore dependencies
-COPY . .
+# Copy libs folder with pre-compiled .NET Framework 4.8 DLLs
+COPY libs/ /src/libs/
+
+# Copy microservice project files
+COPY Microservicio.Factura/ /src/Microservicio.Factura/
+
+# Restore and publish
 WORKDIR /src/Microservicio.Factura
 RUN dotnet restore Microservicio.Factura.csproj
-
-# Publish stage
 RUN dotnet publish Microservicio.Factura.csproj -c Release -o /app/publish
 
 # Runtime stage
