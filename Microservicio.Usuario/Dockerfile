@@ -1,33 +1,23 @@
-# Build and publish stage
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar archivos de proyecto
-COPY ["Microservicio.Usuario/Microservicio.Usuario.csproj", "Microservicio.Usuario/"]
-COPY ["AccesoDatos/AccesoDatos.csproj", "AccesoDatos/"]
-COPY ["GDatos/GDatos.csproj", "GDatos/"]
-COPY ["Logica/Logica.csproj", "Logica/"]
-
-# Restaurar dependencias
-RUN dotnet restore "Microservicio.Usuario/Microservicio.Usuario.csproj"
-
-# Copiar todo el código fuente
+# Copy everything and restore dependencies
 COPY . .
+WORKDIR /src/Microservicio.Usuario
+RUN dotnet restore Microservicio.Usuario.csproj
 
-# Publicar
-WORKDIR "/src/Microservicio.Usuario"
-RUN dotnet publish "Microservicio.Usuario.csproj" -c Release -o /app/publish /p:UseAppHost=false
+# Publish stage
+RUN dotnet publish Microservicio.Usuario.csproj -c Release -o /app/publish
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+
+# Copy published files
 COPY --from=build /app/publish .
 
-# Variables de entorno para Railway
+# Set environment variables for Railway
 ENV ASPNETCORE_ENVIRONMENT=Production
-ENV ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080}
-
-# Exponer puerto (Railway lo sobrescribe con PORT)
-EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "Microservicio.Usuario.dll"]
