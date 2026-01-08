@@ -17,14 +17,28 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// ? Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+  policy.AllowAnyOrigin()
+     .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+// ? Habilitar CORS
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline - Swagger SIEMPRE habilitado
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Facturas API v1");
- c.RoutePrefix = string.Empty; // Swagger en la raíz
+    c.RoutePrefix = string.Empty; // Swagger en la raíz
 });
 
 app.UseAuthorization();

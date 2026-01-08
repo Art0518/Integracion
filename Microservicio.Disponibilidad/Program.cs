@@ -17,7 +17,21 @@ builder.Services.AddSwaggerGen(c =>
  });
 });
 
+// ? Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+           .AllowAnyHeader();
+  });
+});
+
 var app = builder.Build();
+
+// ? Habilitar CORS
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline - Swagger SIEMPRE habilitado
 app.UseSwagger();

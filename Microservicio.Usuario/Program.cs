@@ -17,7 +17,21 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// ? Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+ .AllowAnyMethod()
+ .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+// ? Habilitar CORS
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline - Swagger SIEMPRE habilitado
 app.UseSwagger();
@@ -27,7 +41,6 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty; // Swagger en la raíz (http://localhost:5003/)
 });
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
