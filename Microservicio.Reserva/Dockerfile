@@ -2,13 +2,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy everything and restore dependencies
+# Copy everything
 COPY . .
-WORKDIR /src/Microservicio.Reserva
-RUN dotnet restore Microservicio.Reserva.csproj
 
-# Publish stage
-RUN dotnet publish Microservicio.Reserva.csproj -c Release -o /app/publish
+# Publish only the microservice project (skip restore errors from .NET Framework projects)
+WORKDIR /src/Microservicio.Reserva
+RUN dotnet publish Microservicio.Reserva.csproj -c Release -o /app/publish --no-restore || \
+    dotnet publish Microservicio.Reserva.csproj -c Release -o /app/publish
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
