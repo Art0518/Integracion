@@ -5,7 +5,7 @@
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -17,7 +17,7 @@
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -29,7 +29,7 @@
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/reservas/{idReserva}",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Get", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/reservas/{idReserva}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -41,7 +41,7 @@
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/cancelar",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/cancelar",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -57,7 +57,7 @@
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -69,7 +69,7 @@
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Get", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -81,7 +81,7 @@
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Get", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -97,7 +97,7 @@
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/usuarios",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/usuarios",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -113,7 +113,7 @@
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -129,7 +129,7 @@
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Get", "OPTIONS" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
