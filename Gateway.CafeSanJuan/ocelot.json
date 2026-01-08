@@ -1,29 +1,29 @@
 {
   "Routes": [
     // ============================================
-    // MICROSERVICIO DE RESERVAS (Puerto 5001)
+    // MICROSERVICIO DE RESERVAS
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
       "UpstreamHttpMethod": [ "Post" ],
- "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
-"DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
-   {
-          "Host": "localhost",
-        "Port": 5001
+        {
+          "Host": "reservas-production1.up.railway.app",
+          "Port": 443
         }
       ]
     },
     {
-    "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
-  "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
+      "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
-      "DownstreamScheme": "http",
-   "DownstreamHostAndPorts": [
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "reservas-production1.up.railway.app",
+          "Port": 443
         }
       ]
     },
@@ -31,11 +31,11 @@
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/reservas/{idReserva}",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/reservas/{idReserva}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-     "Host": "localhost",
-          "Port": 5001
+          "Host": "reservas-production1.up.railway.app",
+          "Port": 443
         }
       ]
     },
@@ -43,104 +43,104 @@
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/cancelar",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/cancelar",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
-    {
-     "Host": "localhost",
-   "Port": 5001
+        {
+          "Host": "reservas-production1.up.railway.app",
+          "Port": 443
         }
       ]
     },
     
     // ============================================
- // MICROSERVICIO DE FACTURAS (Puerto 5002)
+    // MICROSERVICIO DE FACTURAS
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices",
-      "DownstreamScheme": "http",
- "DownstreamHostAndPorts": [
-{
-          "Host": "localhost",
-       "Port": 5002
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "factura-production-7d28.up.railway.app",
+          "Port": 443
         }
-   ]
+      ]
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}",
-  "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
-     }
+          "Host": "factura-production-7d28.up.railway.app",
+          "Port": 443
+        }
       ]
     },
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
       "UpstreamHttpMethod": [ "Get" ],
-   "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
-      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-      "Port": 5002
-  }
-   ]
+          "Host": "factura-production-7d28.up.railway.app",
+          "Port": 443
+        }
+      ]
     },
     
     // ============================================
-    // MICROSERVICIO DE USUARIOS (Puerto 5003)
+    // MICROSERVICIO DE USUARIOS
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/usuarios",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/usuarios",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "usuario-production1.up.railway.app",
+          "Port": 443
         }
       ]
     },
     
     // ============================================
-    // MICROSERVICIO DE DISPONIBILIDAD (Puerto 5004)
+    // MICROSERVICIO DE DISPONIBILIDAD
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-        "Host": "localhost",
-          "Port": 5004
+          "Host": "disponibilidad-production-1469.up.railway.app",
+          "Port": 443
         }
       ]
     },
     
     // ============================================
-    // MICROSERVICIO DE BÚSQUEDA (Puerto 5005)
+    // MICROSERVICIO DE BÚSQUEDA
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
       "UpstreamHttpMethod": [ "Get" ],
       "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-       "Host": "localhost",
-   "Port": 5005
+          "Host": "busqueda-production-70a5.up.railway.app",
+          "Port": 443
         }
       ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "https://gateway-production.up.railway.app"
   }
 }
