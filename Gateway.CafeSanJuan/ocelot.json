@@ -1,0 +1,146 @@
+{
+  "Routes": [
+    // ============================================
+    // MICROSERVICIO DE RESERVAS (Puerto 5001)
+    // ============================================
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
+      "UpstreamHttpMethod": [ "Post" ],
+ "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/hold",
+"DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+   {
+          "Host": "localhost",
+        "Port": 5001
+        }
+      ]
+    },
+    {
+    "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
+  "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/book",
+      "DownstreamScheme": "http",
+   "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/reservas/{idReserva}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/reservas/{idReserva}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+     "Host": "localhost",
+          "Port": 5001
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/cancelar",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/cancelar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+    {
+     "Host": "localhost",
+   "Port": 5001
+        }
+      ]
+    },
+    
+    // ============================================
+ // MICROSERVICIO DE FACTURAS (Puerto 5002)
+    // ============================================
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices",
+      "DownstreamScheme": "http",
+ "DownstreamHostAndPorts": [
+{
+          "Host": "localhost",
+       "Port": 5002
+        }
+   ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}",
+  "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+     }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
+      "UpstreamHttpMethod": [ "Get" ],
+   "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/invoices/{idFactura}/pdf",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+      "Port": 5002
+  }
+   ]
+    },
+    
+    // ============================================
+    // MICROSERVICIO DE USUARIOS (Puerto 5003)
+    // ============================================
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/usuarios",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/usuarios",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ]
+    },
+    
+    // ============================================
+    // MICROSERVICIO DE DISPONIBILIDAD (Puerto 5004)
+    // ============================================
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+        "Host": "localhost",
+          "Port": 5004
+        }
+      ]
+    },
+    
+    // ============================================
+    // MICROSERVICIO DE BÚSQUEDA (Puerto 5005)
+    // ============================================
+    {
+      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+       "Host": "localhost",
+   "Port": 5005
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
+}

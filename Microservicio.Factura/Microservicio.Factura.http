@@ -1,0 +1,6 @@
+@Microservicio.Factura_HostAddress = http://localhost:5010
+
+GET {{Microservicio.Factura_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,15 @@
+namespace Microservicio.Factura.DTOs
+{
+    public class FacturaResponse
+    {
+        public string Mensaje { get; set; } = string.Empty;
+        public int IdFactura { get; set; }
+        public int IdUsuario { get; set; }
+        public int IdReserva { get; set; }
+        public decimal Subtotal { get; set; }
+        public decimal IVA { get; set; }
+        public decimal Total { get; set; }
+        public string Fecha { get; set; } = string.Empty;
+        public string Estado { get; set; } = string.Empty;
+    }
+}
