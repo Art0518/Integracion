@@ -14,7 +14,7 @@ namespace AccesoDatos.DAO
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
-                SqlCommand cmd = new SqlCommand("sp_login_usuario", cn);
+                SqlCommand cmd = new SqlCommand("seguridad.sp_login_usuario", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@Contrasena", contrasena);
@@ -29,7 +29,7 @@ namespace AccesoDatos.DAO
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
-                SqlCommand cmd = new SqlCommand("sp_registrar_usuario", cn);
+                SqlCommand cmd = new SqlCommand("seguridad.sp_registrar_usuario", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Nombre", u.Nombre);
@@ -56,7 +56,7 @@ namespace AccesoDatos.DAO
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
-                SqlCommand cmd = new SqlCommand("sp_listar_usuarios", cn);
+                SqlCommand cmd = new SqlCommand("seguridad.sp_listar_usuarios", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Rol", (object)rol ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Estado", (object)estado ?? DBNull.Value);
@@ -71,7 +71,7 @@ namespace AccesoDatos.DAO
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
-                SqlCommand cmd = new SqlCommand("sp_actualizar_usuario", cn);
+                SqlCommand cmd = new SqlCommand("seguridad.sp_actualizar_usuario", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IdUsuario", u.IdUsuario);
                 cmd.Parameters.AddWithValue("@Nombre", (object)u.Nombre ?? DBNull.Value);
@@ -90,7 +90,7 @@ namespace AccesoDatos.DAO
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
-                SqlCommand cmd = new SqlCommand("sp_cambiar_estado_usuario", cn);
+                SqlCommand cmd = new SqlCommand("seguridad.sp_cambiar_estado_usuario", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
                 cmd.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
