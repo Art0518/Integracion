@@ -66,15 +66,27 @@ namespace Microservicio.Usuario.Controllers
         }
 
         [HttpGet("listar")]
-        [ProducesResponseType(typeof(List<UsuarioListarResponseDTO>), 200)]
-        public IActionResult ListarUsuarios()
+        [ProducesResponseType(typeof(UsuarioPaginadoResponseDTO), 200)]
+        public IActionResult ListarUsuarios(
+            [FromQuery] int pagina = 1,
+            [FromQuery] int tamanoPagina = 50,
+            [FromQuery] string? rol = null,
+            [FromQuery] string? estado = null)
         {
             try
             {
-                DataTable dt = _usuarioLogica.Listar();
+                // Validaciones
+                if (pagina < 1)
+                    pagina = 1;
+
+                if (tamanoPagina < 1 || tamanoPagina > 100)
+                    tamanoPagina = 50; // Máximo 100 registros por página
+
+                // Obtener datos paginados
+                var resultado = _usuarioLogica.ListarPaginado(pagina, tamanoPagina, rol, estado);
                 var usuarios = new List<UsuarioListarResponseDTO>();
 
-                foreach (DataRow row in dt.Rows)
+                foreach (DataRow row in resultado.Usuarios.Rows)
                 {
                     usuarios.Add(new UsuarioListarResponseDTO
                     {
@@ -86,12 +98,62 @@ namespace Microservicio.Usuario.Controllers
                     });
                 }
 
-                return Ok(usuarios);
+                // Calcular información de paginación
+                int totalUsuarios = resultado.TotalRegistros;
+                int totalPaginas = (int)Math.Ceiling((double)totalUsuarios / tamanoPagina);
+
+                var response = new UsuarioPaginadoResponseDTO
+                {
+                    usuarios = usuarios,
+                    totalUsuarios = totalUsuarios,
+                    paginaActual = pagina,
+                    totalPaginas = totalPaginas,
+                    tamanoPagina = tamanoPagina,
+                    tienePaginaAnterior = pagina > 1,
+                    tienePaginaSiguiente = pagina < totalPaginas,
+                    _links = GenerarLinksNavegacion(pagina, totalPaginas, tamanoPagina, rol, estado)
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
                 return BadRequest("Error al listar usuarios: " + ex.Message);
             }
+        }
+
+        private string GenerarLinksNavegacion(int pagina, int totalPaginas, int tamanoPagina, string? rol, string? estado)
+        {
+            var links = new List<string>();
+            var baseUrl = "/api/usuarios/listar";
+            var parametros = $"tamanoPagina={tamanoPagina}";
+
+            if (!string.IsNullOrEmpty(rol))
+                parametros += $"&rol={rol}";
+
+            if (!string.IsNullOrEmpty(estado))
+                parametros += $"&estado={estado}";
+
+            // Link primera página
+            if (pagina > 1)
+                links.Add($"primera: {baseUrl}?pagina=1&{parametros}");
+
+            // Link página anterior
+            if (pagina > 1)
+                links.Add($"anterior: {baseUrl}?pagina={pagina - 1}&{parametros}");
+
+            // Link página actual
+            links.Add($"actual: {baseUrl}?pagina={pagina}&{parametros}");
+
+            // Link página siguiente
+            if (pagina < totalPaginas)
+                links.Add($"siguiente: {baseUrl}?pagina={pagina + 1}&{parametros}");
+
+            // Link última página
+            if (pagina < totalPaginas)
+                links.Add($"ultima: {baseUrl}?pagina={totalPaginas}&{parametros}");
+
+            return string.Join(", ", links);
         }
     }
 }

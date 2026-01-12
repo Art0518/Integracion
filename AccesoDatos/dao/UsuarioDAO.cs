@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using AccesoDatos.Conexion;
 using GDatos.Entidades;
+using GDatos.DTOs;
 
 namespace AccesoDatos.DAO
 {
@@ -63,6 +64,38 @@ namespace AccesoDatos.DAO
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 return dt;
+            }
+        }
+
+        public ResultadoPaginado ListarPaginado(int pagina, int tamanoPagina, string rol = null, string estado = null)
+        {
+            using (SqlConnection cn = conexion.CrearConexion())
+            {
+                SqlCommand cmd = new SqlCommand("seguridad.sp_listar_usuarios_paginado", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+    
+                cmd.Parameters.AddWithValue("@Pagina", pagina);
+                cmd.Parameters.AddWithValue("@TamanoPagina", tamanoPagina);
+                cmd.Parameters.AddWithValue("@Rol", (object)rol ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Estado", (object)estado ?? DBNull.Value);
+
+                SqlParameter totalParam = new SqlParameter("@TotalRegistros", SqlDbType.Int);
+                totalParam.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(totalParam);
+
+                cn.Open();
+                
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                int totalRegistros = (int)totalParam.Value;
+
+                return new ResultadoPaginado
+                {
+                    Usuarios = dt,
+                    TotalRegistros = totalRegistros
+                };
             }
         }
 

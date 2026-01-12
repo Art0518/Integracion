@@ -3,6 +3,7 @@ using System.Data;
 using AccesoDatos.DAO;
 using GDatos.Entidades;
 using Logica.Validaciones;
+using GDatos.DTOs;
 
 namespace Logica.Servicios
 {
@@ -38,6 +39,18 @@ namespace Logica.Servicios
         public DataTable Listar(string rol = null, string estado = null)
         {
             return dao.Listar(rol, estado);
+        }
+
+        // Listar usuarios con paginación
+        public ResultadoPaginado ListarPaginado(int pagina, int tamanoPagina, string rol = null, string estado = null)
+        {
+            if (pagina < 1)
+                throw new Exception("La página debe ser mayor a 0.");
+
+            if (tamanoPagina < 1 || tamanoPagina > 100)
+                throw new Exception("El tamaño de página debe estar entre 1 y 100.");
+
+            return dao.ListarPaginado(pagina, tamanoPagina, rol, estado);
         }
 
         // Actualizar usuario
