@@ -34,7 +34,7 @@ namespace Logica.Servicios
             return dao.Registrar(u);
         }
 
-        // Listar usuarios
+        // Listar usuarios (método original - mantener para compatibilidad)
         public DataTable Listar(string rol = null, string estado = null)
         {
             return dao.Listar(rol, estado);

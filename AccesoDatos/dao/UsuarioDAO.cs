@@ -29,7 +29,7 @@ namespace AccesoDatos.DAO
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
-                SqlCommand cmd = new SqlCommand("seguridad.sp_registrar_usuario", cn);
+                SqlCommand cmd = new SqlCommand("sp_registrar_usuario", cn);  // Sin esquema seguridad
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Nombre", u.Nombre);
@@ -50,7 +50,6 @@ namespace AccesoDatos.DAO
                 return (int)outputIdParam.Value;
             }
         }
-
 
         public DataTable Listar(string rol = null, string estado = null)
         {
