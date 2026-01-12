@@ -25,7 +25,7 @@ namespace AccesoDatos.DAO
             }
         }
 
-        public void Registrar(Usuario u)
+        public int Registrar(Usuario u)
         {
             using (SqlConnection cn = conexion.CrearConexion())
             {
@@ -38,8 +38,16 @@ namespace AccesoDatos.DAO
                 cmd.Parameters.AddWithValue("@TipoIdentificacion", u.TipoIdentificacion);
                 cmd.Parameters.AddWithValue("@Identificacion", u.Identificacion);
 
+                // Parámetro de salida para obtener el ID generado
+                SqlParameter outputIdParam = new SqlParameter("@IdUsuarioGenerado", SqlDbType.Int);
+                outputIdParam.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(outputIdParam);
+
                 cn.Open();
                 cmd.ExecuteNonQuery();
+
+                // Devolver el ID generado
+                return (int)outputIdParam.Value;
             }
         }
 

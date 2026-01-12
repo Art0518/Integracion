@@ -23,7 +23,7 @@ namespace Logica.Servicios
         }
 
         // Registrar nuevo usuario
-        public void Registrar(Usuario u)
+        public int Registrar(Usuario u)
         {
             if (string.IsNullOrEmpty(u.Nombre) || string.IsNullOrEmpty(u.Email))
                 throw new Exception("Nombre y correo son obligatorios.");
@@ -31,7 +31,7 @@ namespace Logica.Servicios
             if (!ValidacionUsuario.EmailValido(u.Email))
                 throw new Exception("Correo electrónico inválido.");
 
-            dao.Registrar(u);
+            return dao.Registrar(u);
         }
 
         // Listar usuarios
