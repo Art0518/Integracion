@@ -1,7 +1,6 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +11,6 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 // ? Agregar Controllers
 builder.Services.AddControllers();
 
-// ? Registrar un esquema de autenticación por defecto "NoAuth" ligero
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = "NoAuth";
-})
-// Handler simple que autentica siempre como "Anonymous" (evita excepciones cuando
-// AuthorizationMiddleware se ejecuta sin un esquema configurado). Si se desea
-// autenticación real, reemplazar por el esquema correspondiente.
-.AddScheme<AuthenticationSchemeOptions, Gateway.CafeSanJuan.NoAuth.NoAuthHandler>(
-    "NoAuth", options => { });
 
 // ? Configurar HttpClient para aceptar certificados SSL
 builder.Services.AddHttpClient();
@@ -91,10 +80,6 @@ catch (Exception ex)
 }
 
 // ? Usar Ocelot SOLO para rutas no manejadas por Controllers/Swagger
-// ? Asegurar que el middleware de autenticación/autorization esté presente
-app.UseAuthentication();
-app.UseAuthorization();
-
 // ? Usar Ocelot SOLO para rutas no manejadas por Controllers/Swagger
 app.UseOcelot((ocelotBuilder, pipelineConfig) =>
 {
