@@ -1,0 +1,20 @@
+### Test POST - Emitir Factura (verificar EstadoFactura y EstadoReserva)
+POST https://factura-production-7d28.up.railway.app/api/facturas/emitir
+Content-Type: application/json
+
+{
+  "idReserva": 118,
+  "email": "Arturo1232123123123@gmail.com",
+  "nombre": "Arturo",
+  "tipoIdentificacion": "Cedula",
+  "identificacion": "1750442501",
+  "valor": 40
+}
+
+### Test GET - Obtener Factura por Reserva
+GET https://factura-production-7d28.up.railway.app/api/facturas/118
+
+### Test GET - Obtener PDF de Factura
+GET https://factura-production-7d28.up.railway.app/api/facturas/118/pdf
+
+###
