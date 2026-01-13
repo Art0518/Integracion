@@ -22,7 +22,6 @@ namespace Microservicio.Factura.Controllers
         /// Emite una nueva factura para una reserva específica.
         /// </summary>
         [HttpPost("emitir")]
-        [Authorize(AuthenticationSchemes = "seguridad")]
         [ProducesResponseType(typeof(FacturaResponse), 200)]
         public IActionResult EmitirFactura([FromBody] FacturaRequest? body)
         {
@@ -87,7 +86,6 @@ namespace Microservicio.Factura.Controllers
         /// Obtiene la factura por IdReserva.
         /// </summary>
         [HttpGet("{idReserva}")]
-        [Authorize(AuthenticationSchemes = "seguridad")]
         [ProducesResponseType(typeof(FacturaGetResponse),200)]
         public IActionResult ObtenerFacturaPorReserva(string idReserva)
         {
