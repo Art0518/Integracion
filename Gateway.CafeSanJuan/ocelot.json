@@ -1,6 +1,5 @@
-{
+﻿{
   "Routes": [
-    // ========================= RESERVAS =========================
     {
       "UpstreamPathTemplate": "/api/reservas/hold",
       "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
@@ -46,7 +45,6 @@
         { "Host": "reservas-production1.up.railway.app", "Port":443 }
       ]
     },
-    // ========================= FACTURAS =========================
     {
       "UpstreamPathTemplate": "/api/facturas/emitir",
       "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
@@ -74,7 +72,6 @@
         { "Host": "factura-production-7d28.up.railway.app", "Port":443 }
       ]
     },
-    // ========================= USUARIOS =========================
     {
       "UpstreamPathTemplate": "/api/usuarios/registrar",
       "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
@@ -93,7 +90,6 @@
         { "Host": "usuario-production1.up.railway.app", "Port":443 }
       ]
     },
-    // ========================= BÚSQUEDA =========================
     {
       "UpstreamPathTemplate": "/api/mesas/buscar",
       "UpstreamHttpMethod": [ "Get", "OPTIONS" ],
