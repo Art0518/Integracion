@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ? Configurar puerto dinámico para Railway
+// ? Configurar puerto dinï¿½mico para Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "API Gateway - Café San Juan",
+        Title = "API Gateway - Cafï¿½ San Juan",
         Version = "v1",
         Description = "Gateway que centraliza todos los microservicios del sistema de reservas"
     });
@@ -54,11 +54,29 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway API v1");
-    c.RoutePrefix = string.Empty; // Swagger en la raíz
+    c.RoutePrefix = string.Empty; // Swagger en la raï¿½z
 });
 
 // ? Mapear Controllers (ANTES de Ocelot)
 app.MapControllers();
+
+// Diagnostic: logear rutas cargadas desde ocelot.json para depuraciÃ³n
+try
+{
+    var routeSection = builder.Configuration.GetSection("Routes");
+    var routeChildren = routeSection.GetChildren().ToList();
+    Console.WriteLine($"[DIAG] Ocelot routes count: {routeChildren.Count}");
+    foreach (var r in routeChildren)
+    {
+        var up = r["UpstreamPathTemplate"] ?? "(no-upstream)";
+        var downHosts = r.GetSection("DownstreamHostAndPorts").GetChildren().Select(h => h["Host"]).ToArray();
+        Console.WriteLine($"[DIAG] Route: {up} -> {string.Join(',', downHosts)}");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine("[DIAG] Error leyendo Routes desde configuraciÃ³n: " + ex.Message);
+}
 
 // ? Usar Ocelot SOLO para rutas no manejadas por Controllers/Swagger
 app.UseOcelot((ocelotBuilder, pipelineConfig) =>
