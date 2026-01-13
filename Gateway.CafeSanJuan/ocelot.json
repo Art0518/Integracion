@@ -105,6 +105,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://gateway-production.up.railway.app"
+    "BaseUrl": "https://apigateway-production1.up.railway.app"
   }
 }
