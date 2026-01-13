@@ -23,7 +23,7 @@ namespace Logica.Servicios
                 throw new ArgumentException("Debe indicar un nombre válido.", nameof(nombre));
 
             if (string.IsNullOrEmpty(tipoIdentificacion))
-                throw new ArgumentException("Debe indicar un tipo de identificación válido.", nameof(tipoIdentificacion));
+                throw new ArgumentException("Debe indicar un tipo de identificación válida.", nameof(tipoIdentificacion));
 
             if (string.IsNullOrEmpty(identificacion))
                 throw new ArgumentException("Debe indicar una identificación válida.", nameof(identificacion));
@@ -166,6 +166,14 @@ namespace Logica.Servicios
 
             // 4️⃣ Retornar la fila real generada por el SP
             return dt.Rows[0];
+        }
+
+        public DataTable ObtenerFacturaPorIdReserva(string idReserva)
+        {
+            if (string.IsNullOrWhiteSpace(idReserva))
+                throw new ArgumentException("El IdReserva no es válido.");
+
+            return dao.DetalleFacturaPorIdReserva(idReserva);
         }
     }
 }

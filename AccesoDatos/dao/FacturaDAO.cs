@@ -135,5 +135,22 @@ namespace AccesoDatos.DAO
             }
         }
 
+        /// <summary>
+        /// Obtiene el detalle de la factura por IdReserva (string).
+        /// </summary>
+        public DataTable DetalleFacturaPorIdReserva(string idReserva)
+        {
+            using (SqlConnection cn = conexion.CrearConexion())
+            {
+                SqlCommand cmd = new SqlCommand("sp_detalle_factura_por_idreserva", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdReserva", idReserva);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
     }
 }
