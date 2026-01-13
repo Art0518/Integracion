@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\ResultadoPaginado.cs" />
     <Compile Include="entidades\DetalleFactura.cs" />
     <Compile Include="entidades\Factura.cs" />
     <Compile Include="entidades\LogTransaccion.cs" />
