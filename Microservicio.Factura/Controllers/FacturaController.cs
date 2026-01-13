@@ -11,6 +11,12 @@ namespace Microservicio.Factura.Controllers
     public class FacturaController : ControllerBase
     {
         private readonly FacturaLogica _facturaLogica = new FacturaLogica();
+        private readonly ILogger<FacturaController> _logger;
+
+        public FacturaController(ILogger<FacturaController> logger)
+        {
+            _logger = logger;
+        }
 
         /// <summary>
         /// Emite una nueva factura para una reserva específica.
@@ -22,8 +28,13 @@ namespace Microservicio.Factura.Controllers
         {
             try
             {
+                _logger.LogInformation("Iniciando emisión de factura");
+
                 if (body == null)
+                {
+                    _logger.LogWarning("El cuerpo de la solicitud está vacío");
                     return BadRequest("El cuerpo de la solicitud está vacío.");
+                }
 
                 int idReserva = body.IdReserva;
                 string correo = body.Email;
@@ -32,11 +43,16 @@ namespace Microservicio.Factura.Controllers
                 string identificacion = body.Identificacion;
                 decimal valor = body.Valor;
 
+                _logger.LogInformation($"Generando factura para reserva {idReserva}");
+
                 // Lógica para generar la factura
                 DataTable dt = _facturaLogica.GenerarFactura(idReserva, correo, nombre, tipoIdentificacion, identificacion, valor);
 
                 if (dt == null || dt.Rows.Count == 0)
+                {
+                    _logger.LogWarning($"No se obtuvo respuesta al generar la factura para reserva {idReserva}");
                     return BadRequest("No se obtuvo respuesta al generar la factura.");
+                }
 
                 var row = dt.Rows[0];
 
@@ -57,11 +73,13 @@ namespace Microservicio.Factura.Controllers
                     UriFactura = $"/api/facturas/{(row.Table.Columns.Contains("IdFactura") && row["IdFactura"] != DBNull.Value ? row["IdFactura"].ToString() : "0")}/pdf"
                 };
 
+                _logger.LogInformation($"Factura generada exitosamente: {response.IdFactura}");
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest("Error al emitir factura: " + ex.Message);
+                _logger.LogError(ex, "Error al emitir factura");
+                return StatusCode(500, new { error = "Error al emitir factura", message = ex.Message, stackTrace = ex.StackTrace });
             }
         }
 
@@ -75,9 +93,15 @@ namespace Microservicio.Factura.Controllers
         {
             try
             {
+                _logger.LogInformation($"Obteniendo factura para reserva {idReserva}");
+
                 DataTable dt = _facturaLogica.ObtenerFacturaPorIdReserva(idReserva);
                 if (dt == null || dt.Rows.Count ==0)
-                    return NotFound();
+                {
+                    _logger.LogWarning($"No se encontró factura para reserva {idReserva}");
+                    return NotFound(new { error = "Factura no encontrada", idReserva });
+                }
+
                 var row = dt.Rows[0];
                 var idFactura = row.Table.Columns.Contains("IdFactura") && row["IdFactura"] != DBNull.Value ? row["IdFactura"].ToString() : "0";
                 var response = new
@@ -99,11 +123,14 @@ namespace Microservicio.Factura.Controllers
                         }
                     }
                 };
+
+                _logger.LogInformation($"Factura encontrada: {response.idFactura}");
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest("Error al obtener la factura: " + ex.Message);
+                _logger.LogError(ex, $"Error al obtener la factura para reserva {idReserva}");
+                return StatusCode(500, new { error = "Error al obtener la factura", message = ex.Message, stackTrace = ex.StackTrace });
             }
         }
 
@@ -115,10 +142,16 @@ namespace Microservicio.Factura.Controllers
         {
             try
             {
+                _logger.LogInformation($"Obteniendo PDF para reserva {idReserva}");
+
                 // Buscar la factura por IdReserva
                 DataTable dt = _facturaLogica.ObtenerFacturaPorIdReserva(idReserva);
                 if (dt == null || dt.Rows.Count ==0)
-                    return NotFound();
+                {
+                    _logger.LogWarning($"No se encontró factura para generar PDF de reserva {idReserva}");
+                    return NotFound(new { error = "Factura no encontrada", idReserva });
+                }
+
                 var row = dt.Rows[0];
                 var idFactura = row.Table.Columns.Contains("IdFactura") && row["IdFactura"] != DBNull.Value ? Convert.ToInt32(row["IdFactura"]) :0;
                 var fechaGeneracion = row.Table.Columns.Contains("FechaGeneracion") && row["FechaGeneracion"] != DBNull.Value ? Convert.ToDateTime(row["FechaGeneracion"]).ToString("yyyy-MM-ddTHH:mm:ss.fffK") : DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffK");
@@ -144,11 +177,14 @@ namespace Microservicio.Factura.Controllers
                         }
                     }
                 };
+
+                _logger.LogInformation($"PDF disponible para factura {idFactura}");
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest("Error al obtener el PDF de la factura: " + ex.Message);
+                _logger.LogError(ex, $"Error al obtener el PDF de la factura para reserva {idReserva}");
+                return StatusCode(500, new { error = "Error al obtener el PDF de la factura", message = ex.Message, stackTrace = ex.StackTrace });
             }
         }
     }
