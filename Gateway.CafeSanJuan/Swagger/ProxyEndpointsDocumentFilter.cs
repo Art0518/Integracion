@@ -8,6 +8,15 @@ namespace Gateway.CafeSanJuan.Swagger
  {
  public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
  {
+ // Limpiar tags existentes y definir los nuestros
+ swaggerDoc.Tags = new List<OpenApiTag>
+ {
+ new OpenApiTag { Name = "Usuarios", Description = "Operaciones de usuarios" },
+ new OpenApiTag { Name = "Reservas", Description = "Operaciones de reservas" },
+ new OpenApiTag { Name = "Facturas", Description = "Operaciones de facturación" },
+ new OpenApiTag { Name = "Mesas", Description = "Operaciones de búsqueda de mesas" }
+ };
+
  // RESERVAS
  swaggerDoc.Paths.Add("/api/reservas/hold", new OpenApiPathItem
  {
@@ -16,6 +25,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Post] = new OpenApiOperation
  {
  Summary = "Crear pre-reserva (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservas" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
@@ -27,6 +37,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Post] = new OpenApiOperation
  {
  Summary = "Confirmar reserva (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservas" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
@@ -38,6 +49,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Get] = new OpenApiOperation
  {
  Summary = "Buscar reserva (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservas" } },
  Parameters = new List<OpenApiParameter>
  {
  new OpenApiParameter
@@ -59,6 +71,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Put] = new OpenApiOperation
  {
  Summary = "Cancelar reserva (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservas" } },
  Parameters = new List<OpenApiParameter>
  {
  new OpenApiParameter
@@ -80,6 +93,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Post] = new OpenApiOperation
  {
  Summary = "Verificar disponibilidad (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Reservas" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
@@ -93,6 +107,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Post] = new OpenApiOperation
  {
  Summary = "Emitir factura (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Facturas" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
@@ -104,6 +119,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Get] = new OpenApiOperation
  {
  Summary = "Obtener factura (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Facturas" } },
  Parameters = new List<OpenApiParameter>
  {
  new OpenApiParameter
@@ -125,6 +141,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Get] = new OpenApiOperation
  {
  Summary = "PDF de factura (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Facturas" } },
  Parameters = new List<OpenApiParameter>
  {
  new OpenApiParameter
@@ -148,6 +165,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Post] = new OpenApiOperation
  {
  Summary = "Registrar usuario (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Usuarios" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
@@ -159,12 +177,13 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Get] = new OpenApiOperation
  {
  Summary = "Listar usuarios (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Usuarios" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
  });
 
- // BÚSQUEDA
+ // MESAS (Búsqueda)
  swaggerDoc.Paths.Add("/api/mesas/buscar", new OpenApiPathItem
  {
  Operations = new Dictionary<OperationType, OpenApiOperation>
@@ -172,6 +191,7 @@ namespace Gateway.CafeSanJuan.Swagger
  [OperationType.Get] = new OpenApiOperation
  {
  Summary = "Buscar mesas (proxy)",
+ Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Mesas" } },
  Responses = new OpenApiResponses { ["200"] = new OpenApiResponse { Description = "OK" } }
  }
  }
