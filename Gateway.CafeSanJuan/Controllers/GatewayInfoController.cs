@@ -23,8 +23,7 @@ namespace Gateway.CafeSanJuan.Controllers
 new { Nombre = "Reservas", URL = "https://reservas-production1.up.railway.app" },
     new { Nombre = "Facturas", URL = "https://factura-production-7d28.up.railway.app" },
     new { Nombre = "Usuarios", URL = "https://usuario-production1.up.railway.app" },
-             new { Nombre = "Disponibilidad", URL = "https://disponibilidad-production-1469.up.railway.app" },
-        new { Nombre = "Búsqueda", URL = "https://busqueda-production-70a5.up.railway.app" }
+             new { Nombre = "Búsqueda", URL = "https://busqueda-production-70a5.up.railway.app" }
      }
      });
         }
@@ -45,7 +44,7 @@ new { Nombre = "Reservas", URL = "https://reservas-production1.up.railway.app" }
         }
 
     /// <summary>
-        /// Listar todas las rutas configuradas en Ocelot
+        /// Listar todas las rutas configuradas en Ocelot (actualizadas)
         /// </summary>
         [HttpGet("routes")]
         [ProducesResponseType(200)]
@@ -53,16 +52,21 @@ new { Nombre = "Reservas", URL = "https://reservas-production1.up.railway.app" }
         {
     var routes = new[]
      {
-            new { Metodo = "POST", Ruta = "/api/v1/integracion/restaurantes/hold", Microservicio = "Reservas", Descripcion = "Crear pre-reserva" },
-                new { Metodo = "POST", Ruta = "/api/v1/integracion/restaurantes/book", Microservicio = "Reservas", Descripcion = "Confirmar reserva" },
-new { Metodo = "GET", Ruta = "/api/v1/integracion/restaurantes/reservas/{id}", Microservicio = "Reservas", Descripcion = "Buscar reserva" },
-    new { Metodo = "POST", Ruta = "/api/v1/integracion/restaurantes/cancelar", Microservicio = "Reservas", Descripcion = "Cancelar reserva" },
- new { Metodo = "POST", Ruta = "/api/v1/integracion/restaurantes/invoices", Microservicio = "Facturas", Descripcion = "Crear factura" },
- new { Metodo = "GET", Ruta = "/api/v1/integracion/restaurantes/invoices/{id}", Microservicio = "Facturas", Descripcion = "Obtener factura" },
-         new { Metodo = "GET", Ruta = "/api/v1/integracion/restaurantes/invoices/{id}/pdf", Microservicio = "Facturas", Descripcion = "PDF de factura" },
-      new { Metodo = "POST", Ruta = "/api/v1/integracion/restaurantes/usuarios", Microservicio = "Usuarios", Descripcion = "Crear usuario" },
-         new { Metodo = "POST", Ruta = "/api/v1/integracion/restaurantes/availability", Microservicio = "Disponibilidad", Descripcion = "Verificar disponibilidad" },
-       new { Metodo = "GET", Ruta = "/api/v1/integracion/restaurantes/search", Microservicio = "Búsqueda", Descripcion = "Buscar mesas" }
+            // Reservas
+            new { Metodo = "POST", Ruta = "/api/reservas/hold", Microservicio = "Reservas", Descripcion = "Crear pre-reserva" },
+                new { Metodo = "POST", Ruta = "/api/reservas/confirmar", Microservicio = "Reservas", Descripcion = "Confirmar reserva" },
+new { Metodo = "GET", Ruta = "/api/reservas/{idReserva}", Microservicio = "Reservas", Descripcion = "Buscar reserva" },
+    new { Metodo = "PUT", Ruta = "/api/reservas/cancelar/{idReserva}", Microservicio = "Reservas", Descripcion = "Cancelar reserva" },
+    new { Metodo = "POST", Ruta = "/api/reservas/disponibilidad", Microservicio = "Reservas", Descripcion = "Verificar disponibilidad" },
+ // Facturas (actualizados)
+ new { Metodo = "POST", Ruta = "/api/facturas/emitir", Microservicio = "Facturas", Descripcion = "Emitir factura" },
+ new { Metodo = "GET", Ruta = "/api/facturas/{idReserva}", Microservicio = "Facturas", Descripcion = "Obtener factura" },
+ new { Metodo = "GET", Ruta = "/api/facturas/{idReserva}/pdf", Microservicio = "Facturas", Descripcion = "PDF de factura" },
+ // Usuarios (actualizados)
+ new { Metodo = "POST", Ruta = "/api/usuarios/registrar", Microservicio = "Usuarios", Descripcion = "Registrar usuario" },
+ new { Metodo = "GET", Ruta = "/api/usuarios/listar", Microservicio = "Usuarios", Descripcion = "Listar usuarios" },
+ // Búsqueda (actualizado)
+ new { Metodo = "GET", Ruta = "/api/mesas/buscar", Microservicio = "Búsqueda", Descripcion = "Buscar mesas" }
             };
 
        return Ok(routes);
