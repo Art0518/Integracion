@@ -28,6 +28,8 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "Gateway que centraliza todos los microservicios del sistema de reservas"
     });
+    // Agregar filtro para documentar endpoints proxy
+    c.DocumentFilter<Gateway.CafeSanJuan.Swagger.ProxyEndpointsDocumentFilter>();
 });
 
 // ? Configurar CORS para permitir cualquier origen
