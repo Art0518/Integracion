@@ -109,23 +109,7 @@
     },
     
     // ============================================
-    // MICROSERVICIO DE DISPONIBILIDAD
-    // ============================================
-    {
-      "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
-      "UpstreamHttpMethod": [ "Post", "OPTIONS" ],
-      "DownstreamPathTemplate": "/api/v1/integracion/restaurantes/availability",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "disponibilidad-production-1469.up.railway.app",
-          "Port": 443
-        }
-      ]
-    },
-    
-    // ============================================
-    // MICROSERVICIO DE BÚSQUEDA
+    // MICROSERVICIO DE BÃšSQUEDA
     // ============================================
     {
       "UpstreamPathTemplate": "/api/v1/integracion/restaurantes/search",
